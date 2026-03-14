@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f405185ad520c409b243f909d5523f, type: 3}
+  m_Name: StageData_2
+  m_EditorClassIdentifier: 
+  monsterPrefab: {fileID: 6305345978816357810, guid: b09f670a5dd787444a4ab82bd3f2c42d, type: 3}
+  bossPrefab: {fileID: 0}
+  bossRound:
+    bossHp: 500
+    coinOnDeath: 10
+  rounds:
+  - monsterCount: 8
+    monsterHp: 100
+    coinPerMonster: 3
+  - monsterCount: 8
+    monsterHp: 100
+    coinPerMonster: 3
+  - monsterCount: 8
+    monsterHp: 100
+    coinPerMonster: 3
+  - monsterCount: 8
+    monsterHp: 100
+    coinPerMonster: 3
+  - monsterCount: 8
+    monsterHp: 100
+    coinPerMonster: 3

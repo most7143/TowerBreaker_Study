@@ -11,6 +11,19 @@ public class GameManager : MonoBehaviour
     // 각 스테이지의 클리어 여부 (0번=1스테이지, 1번=2스테이지, 2번=3스테이지)
     private bool[] _stageCleared = new bool[StageCount];
 
+    // 현재 진행 중인 스테이지 번호 (1~3)
+    public int CurrentStageNumber { get; private set; } = 1;
+
+    // Resources/StageData 폴더에서 StageData 에셋을 로드
+    // 파일명 규칙: "StageData_1", "StageData_2", "StageData_3"
+    public StageData GetCurrentStageData()
+    {
+        StageData data = Resources.Load<StageData>($"StageData/StageData_{CurrentStageNumber}");
+        if (data == null)
+            Debug.LogError($"StageData_{CurrentStageNumber} 을 Resources/StageData 폴더에서 찾을 수 없습니다.");
+        return data;
+    }
+
     private void Awake()
     {
         if (Instance != null)
@@ -50,7 +63,7 @@ public class GameManager : MonoBehaviour
     {
         if (!IsStageUnlocked(stageNumber)) return;
 
-        PlayerPrefs.SetInt("CurrentStage", stageNumber);
+        CurrentStageNumber = stageNumber;
         SceneManager.LoadScene("MainScene");
     }
 

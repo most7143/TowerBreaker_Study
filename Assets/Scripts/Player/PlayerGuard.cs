@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class PlayerGuard : MonoBehaviour, IGuardable
 {
-    [SerializeField] private float guardCooldown = 2f;
-    [SerializeField] private float guardPushForce = 12f;
-    [SerializeField] private float guardPushDrag = 4f;
     [SerializeField] private MonsterGroup monsterGroup;
+    [SerializeField] private PlayerUpgradeState upgradeState;
+
+    private float _guardCooldown  = 2f;
+    private float _guardPushForce = 12f;
+    private float _guardPushDrag  = 4f;
 
     private PlayerAnimator _playerAnimator;
     private PlayerWallState _wallState;
@@ -17,6 +19,18 @@ public class PlayerGuard : MonoBehaviour, IGuardable
 
     private void Awake()
     {
+        PlayerStatsData data = Resources.Load<PlayerStatsData>("PlayerData/PlayerStatsData");
+        if (data != null)
+        {
+            _guardCooldown  = data.guardCooldown;
+            _guardPushForce = data.guardPushForce;
+            _guardPushDrag  = data.guardPushDrag;
+        }
+        else
+        {
+            Debug.LogWarning("PlayerStatsData를 Resources/PlayerData 폴더에서 찾을 수 없습니다. 기본값을 사용합니다.");
+        }
+
         _playerAnimator = GetComponent<PlayerAnimator>();
         _wallState = GetComponent<PlayerWallState>();
     }
@@ -44,7 +58,11 @@ public class PlayerGuard : MonoBehaviour, IGuardable
     private IEnumerator GuardCooldownRoutine()
     {
         _isGuardCooldown = true;
-        yield return new WaitForSeconds(guardCooldown);
+
+        float cooldownReduction = upgradeState != null ? upgradeState.GuardCooldownReduction : 0f;
+        float actualCooldown = Mathf.Max(0f, _guardCooldown - cooldownReduction);
+
+        yield return new WaitForSeconds(actualCooldown);
         _isGuardCooldown = false;
         Debug.Log("Guard Cooldown End");
     }
@@ -53,19 +71,18 @@ public class PlayerGuard : MonoBehaviour, IGuardable
     {
         if (!_isGuarding) return;
 
-        bool wasPinnedToWall = _wallState != null && _wallState.IsPinnedToWall;
-        float pushForce = wasPinnedToWall ? guardPushForce * 0.2f : guardPushForce;
-
         monsterGroup.ResumeAllMonsters();
+
+        float pushForceBonus = upgradeState != null ? upgradeState.GuardPushForceBonus : 0f;
 
         MonsterMover[] movers = monsterGroup.GetAllMovers();
         foreach (var mover in movers)
-            mover.PushBack(pushForce, guardPushDrag);
+            mover.PushBack(_guardPushForce + pushForceBonus, _guardPushDrag);
 
-        _wallState?.EscapeFromWall();
+        _wallState?.PushToWall();
 
         GuardEnd();
 
-        Debug.Log($"Guard Hit - push force: {pushForce} (wall escape: {wasPinnedToWall})");
+        Debug.Log("Guard Hit - pushed to wall");
     }
 }

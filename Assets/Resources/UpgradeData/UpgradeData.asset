@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93304f85f5a570845a5e5e3a3c41aea1, type: 3}
+  m_Name: UpgradeData
+  m_EditorClassIdentifier: 
+  attackPowerBonus: 5
+  attackPowerGoldCost: 1
+  attackPowerRate:
+    initialSuccessRate: 0.8
+    successRateDecrement: 0.1
+    minimumSuccessRate: 0.1
+  hpRecoverAmount: 1
+  hpRecoverGoldCost: 1
+  hpRecoverRate:
+    initialSuccessRate: 0.8
+    successRateDecrement: 0.1
+    minimumSuccessRate: 0.1
+  attackSpeedBonus: 0.2
+  attackSpeedGoldCost: 1
+  attackSpeedRate:
+    initialSuccessRate: 0.8
+    successRateDecrement: 0.1
+    minimumSuccessRate: 0.1
+  guardCooldownReduction: 0.3
+  guardCooldownGoldCost: 1
+  guardCooldownRate:
+    initialSuccessRate: 0.8
+    successRateDecrement: 0.1
+    minimumSuccessRate: 0.1
+  guardPushForceBonus: 2
+  guardPushForceGoldCost: 1
+  guardPushForceRate:
+    initialSuccessRate: 0.8
+    successRateDecrement: 0.1
+    minimumSuccessRate: 0.1

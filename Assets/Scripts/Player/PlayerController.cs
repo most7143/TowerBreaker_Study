@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     private PlayerAttack _playerAttack;
     private IDashable _dashable;
     private IGuardable _guardable;
+    private PlayerWallState _wallState;
 
     private ICommand _dashCommand;
     private ICommand _skill1Command;
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
         _playerAttack = GetComponent<PlayerAttack>();
         _dashable = GetComponent<PlayerDash>();
         _guardable = GetComponent<PlayerGuard>();
+        _wallState = GetComponent<PlayerWallState>();
 
         _dashCommand = new DashCommand(_dashable);
         _skill1Command = new Skill1Command(_playerAttack);
@@ -24,8 +26,19 @@ public class PlayerController : MonoBehaviour
         _skill3Command = new Skill3Command(_playerAttack);
     }
 
+    private bool _isInputLocked;
+
+    public void LockInput()   => _isInputLocked = true;
+    public void UnlockInput() => _isInputLocked = false;
+
     private void Update()
     {
+        // 가드 성공 후 벽쪽으로 밀리는 동안 조작 불가
+        if (_wallState != null && _wallState.IsBeingPushed) return;
+
+        // 피격 후 무적 시간 동안 입력 잠금
+        if (_isInputLocked) return;
+
         // 공격: D키 (PointerDown/Up 방식 그대로 재현)
         if (Input.GetKeyDown(KeyCode.D)) OnAttackButtonDown();
         if (Input.GetKeyUp(KeyCode.D)) OnAttackButtonUp();

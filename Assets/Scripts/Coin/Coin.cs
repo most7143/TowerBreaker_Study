@@ -75,7 +75,15 @@ public class Coin : MonoBehaviour
     {
         yield return new WaitForSeconds(fadeDelay);
         yield return FadeOutRoutine();
-        gameObject.SetActive(false);
+        ReturnToPool();
+    }
+
+    private void ReturnToPool()
+    {
+        if (CoinPool.Instance != null)
+            CoinPool.Instance.Return(this);
+        else
+            gameObject.SetActive(false);
     }
 
     private IEnumerator FadeOutRoutine()

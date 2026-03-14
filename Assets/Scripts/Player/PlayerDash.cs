@@ -5,24 +5,23 @@ public class PlayerDash : MonoBehaviour, IDashable
 {
     [SerializeField] private float dashDuration = 0.2f;
     [SerializeField] private float stopDistanceFromMonster = 1f;
+    [SerializeField] private float minDashDistance = 1.5f;  // 몬스터가 이 거리 이내면 대시 불가
     [SerializeField] private MonsterGroup monsterGroup;
+    [SerializeField] private Transform dashLimitPoint;  // 이 X 위치까지만 대시 가능
 
     private PlayerAnimator _playerAnimator;
     private Rigidbody2D _rb;
-    private PlayerWallState _wallState;
     private bool _isDashing;
 
     private void Awake()
     {
         _playerAnimator = GetComponent<PlayerAnimator>();
         _rb = GetComponent<Rigidbody2D>();
-        _wallState = GetComponent<PlayerWallState>();
     }
 
     public void Dash()
     {
         if (_isDashing) return;
-        if (_wallState != null && _wallState.IsPinnedToWall) return;
 
         MonsterMover[] movers = monsterGroup.GetAllMovers();
         if (movers.Length == 0) return;
@@ -38,8 +37,17 @@ public class PlayerDash : MonoBehaviour, IDashable
         }
         if (target == null) return;
 
+        // 가장 가까운 몬스터가 너무 가까우면 대시 불가
+        float distToMonster = target.transform.position.x - transform.position.x;
+        if (distToMonster <= minDashDistance) return;
+
         // 목적지는 x축만 이동, y는 플레이어 현재 y 유지
         float destinationX = target.transform.position.x - stopDistanceFromMonster;
+
+        // 대시 제한 지점이 설정된 경우, 그 X를 넘지 않도록 클램프
+        if (dashLimitPoint != null)
+            destinationX = Mathf.Min(destinationX, dashLimitPoint.position.x);
+
         Vector3 destination = new Vector3(destinationX, transform.position.y, transform.position.z);
 
         // 목적지 기준으로 거리 확인

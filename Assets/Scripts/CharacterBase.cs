@@ -7,6 +7,8 @@ public abstract class CharacterBase : MonoBehaviour
     [SerializeField] protected int attackPower = 10;
     protected int currentHp;
 
+    private Rigidbody2D _rb;
+
     public int MaxHp => maxHp;
     public int CurrentHp => currentHp;
     public int AttackPower => attackPower;
@@ -15,6 +17,15 @@ public abstract class CharacterBase : MonoBehaviour
     protected virtual void Awake()
     {
         currentHp = maxHp;
+        _rb = GetComponent<Rigidbody2D>();
+    }
+
+    // x 위치만 변경하고 velocity를 초기화해 중력으로 바닥에 자연 착지
+    public void ResetPositionX(float x)
+    {
+        transform.position = new Vector3(x, transform.position.y, transform.position.z);
+        if (_rb != null)
+            _rb.velocity = Vector2.zero;
     }
 
     public virtual void TakeDamage(int amount)

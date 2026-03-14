@@ -3,7 +3,8 @@
     "allow": [
       "Bash(find /d/GeonWoo/Documents/TowerBreaker_Study -type f -name \"*Input*\" -o -name \"*Player*\" -o -name \"*Control*\" -o -name \"*Command*\" -o -name \"*Button*\" 2>/dev/null | head -30)",
       "Bash(find /d/GeonWoo/Documents/TowerBreaker_Study/Assets/Scripts -type f -name \"*.cs\" 2>/dev/null | grep -iE \"\\(input|player|control|command|button\\)\" | sort)",
-      "Bash(tree -L 3 \"D:\\\\GeonWoo\\\\Documents\\\\TowerBreaker_Study\\\\Assets\\\\Scripts\" 2>/dev/null || find \"D:\\\\GeonWoo\\\\Documents\\\\TowerBreaker_Study\\\\Assets\\\\Scripts\" -type f -name \"*.cs\" | sed 's|.*Scripts/||' | sort)"
+      "Bash(tree -L 3 \"D:\\\\GeonWoo\\\\Documents\\\\TowerBreaker_Study\\\\Assets\\\\Scripts\" 2>/dev/null || find \"D:\\\\GeonWoo\\\\Documents\\\\TowerBreaker_Study\\\\Assets\\\\Scripts\" -type f -name \"*.cs\" | sed 's|.*Scripts/||' | sort)",
+      "Bash(find \"D:/GeonWoo/Documents/TowerBreaker_Study/Assets/Scripts\" -type f -name \"*.cs\" 2>/dev/null | head -50)"
     ]
   }
 }

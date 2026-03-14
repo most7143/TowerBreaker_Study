@@ -10,21 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f405185ad520c409b243f909d5523f, type: 3}
-  m_Name: Stage1
+  m_Name: StageData_1
   m_EditorClassIdentifier: 
+  monsterPrefab: {fileID: 6305345978816357810, guid: b09f670a5dd787444a4ab82bd3f2c42d, type: 3}
+  bossPrefab: {fileID: 5287607573891426492, guid: 2d12e61268930e74abca11d294eed5d4, type: 3}
+  bossRound:
+    bossHp: 100
+    coinOnDeath: 1
   rounds:
   - monsterCount: 5
     monsterHp: 100
-    coinPerMonster: 3
-  - monsterCount: 6
-    monsterHp: 120
-    coinPerMonster: 3
-  - monsterCount: 7
-    monsterHp: 140
-    coinPerMonster: 3
-  - monsterCount: 8
-    monsterHp: 160
-    coinPerMonster: 3
-  - monsterCount: 9
-    monsterHp: 180
     coinPerMonster: 3

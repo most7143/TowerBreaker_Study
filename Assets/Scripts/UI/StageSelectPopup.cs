@@ -2,19 +2,19 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // 스테이지 선택 팝업 - 스테이지 잠금/해제 상태를 반영해서 버튼 표시
-public class StageSelectPopup : MonoBehaviour
+public class StageSelectPopup : PopupUI
 {
     [SerializeField] private Button[] stageButtons; // 스테이지 수만큼 버튼 (Inspector에서 연결)
 
-    public void Open()
+    public override void Open()
     {
-        gameObject.SetActive(true);
+        base.Open();
         RefreshButtons();
     }
 
-    public void Close()
+    public override void Close()
     {
-        gameObject.SetActive(false);
+        base.Close();
     }
 
     private void RefreshButtons()

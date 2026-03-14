@@ -31,4 +31,33 @@ public class MonsterSpawner : MonoBehaviour
                 monsterGroup.AddMonster(mover);
         }
     }
+
+    // 보스 1마리를 스폰 — 풀 없이 직접 Instantiate (라운드당 1회)
+    public void SpawnBoss(GameObject bossPrefab, BossRoundData bossRound)
+    {
+        MonsterCountUI.Instance.Initialize(1);
+
+        GameObject go = Instantiate(bossPrefab, spawnOrigin, Quaternion.identity);
+
+        BossStats bossStats = go.GetComponent<BossStats>();
+        if (bossStats != null)
+        {
+            bossStats.Initialize(monsterGroup, bossRound.bossHp, bossRound.coinOnDeath);
+            if (coinDropper != null)
+                bossStats.OnDiedWithCoin += coinDropper.Drop;
+        }
+
+        MonsterMover mover = go.GetComponent<MonsterMover>();
+        if (mover != null)
+            monsterGroup.AddMonster(mover);
+
+        // 플레이어의 MonsterContactHandler에 보스 BossAIBrain 동적 등록
+        BossAIBrain brain = go.GetComponent<BossAIBrain>();
+        GameObject playerGo = GameObject.FindWithTag("Player");
+        if (brain != null && playerGo != null)
+        {
+            MonsterContactHandler contactHandler = playerGo.GetComponent<MonsterContactHandler>();
+            contactHandler?.SetBoss(brain);
+        }
+    }
 }
